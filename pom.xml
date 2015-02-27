@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+<!-- ////// PROJECT INFORMATION ////// -->
+
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>de.klickreform</groupId>
+    <artifactId>dropkit</artifactId>
+    <version>0.1</version>
+    <packaging>jar</packaging>
+
+    <name>DropKit</name>
+    <description>A simple toolkit containing various utilities to boost API development with Dropwizard.</description>
+    <url>http://maven.apache.org</url>
+    <inceptionYear>2015</inceptionYear>
+    <organization>
+        <name>KlickReform</name>
+        <url>http://www.klickreform.de</url>
+    </organization>
+
+    <licenses>
+        <license>
+            <name>GNU Lesser General Public License (LGPL), Version 3.0</name>
+            <url>https://www.gnu.org/licenses/lgpl.html</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <!-- Set project properties -->
+    <properties>
+        <dropwizard.version>0.7.1</dropwizard.version>
+        <jar-name>dropkit</jar-name>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+<!-- ////// DEPENDENCIES ////// -->
+
+    <dependencies>
+        <!-- Dropwizard Core | http://dropwizard.codahale.com/manual/core/ -->
+        <dependency>
+            <groupId>io.dropwizard</groupId>
+            <artifactId>dropwizard-core</artifactId>
+            <version>${dropwizard.version}</version>
+        </dependency>
+        <!-- Dropwizard Database Support | http://dropwizard.codahale.com/manual/jdbi/ -->
+        <dependency>
+            <groupId>io.dropwizard</groupId>
+            <artifactId>dropwizard-db</artifactId>
+            <version>${dropwizard.version}</version>
+        </dependency>
+        <!-- Dropwizard Hibernate Support | http://dropwizard.codahale.com/manual/hibernate/ -->
+        <dependency>
+            <groupId>io.dropwizard</groupId>
+            <artifactId>dropwizard-hibernate</artifactId>
+            <version>${dropwizard.version}</version>
+        </dependency>
+        <!-- Apache Commons Codec for common encoders and decoders | http://commons.apache.org/proper/commons-codec/  -->
+        <dependency>
+            <groupId>commons-codec</groupId>
+            <artifactId>commons-codec</artifactId>
+            <version>1.9</version>
+        </dependency>
+        <!-- Apache Commons Lang for java.lang helper utilities | http://commons.apache.org/proper/commons-lang/ -->
+        <dependency>
+            <groupId>commons-lang</groupId>
+            <artifactId>commons-lang</artifactId>
+            <version>2.6</version>
+        </dependency>
+        <!-- The MongoDB Java driver | http://www.mongodb.org/ -->
+        <dependency>
+            <groupId>org.mongodb</groupId>
+            <artifactId>mongo-java-driver</artifactId>
+            <version>2.12.4</version>
+        </dependency>
+        <!-- Java Object Document Mapper for MongoDB | https://github.com/mongodb/morphia -->
+        <dependency>
+            <groupId>org.mongodb.morphia</groupId>
+            <artifactId>morphia</artifactId>
+            <version>0.108</version>
+        </dependency>
+        <!-- Morphia Extension to process JSR 303 Validation Annotations | https://github.com/mongodb/morphia/wiki/ValidationExtension -->
+        <dependency>
+            <groupId>org.mongodb.morphia</groupId>
+            <artifactId>morphia-validation</artifactId>
+            <version>0.108</version>
+        </dependency>
+        <!-- Java Validation API -->
+        <dependency>
+            <groupId>javax.validation</groupId>
+            <artifactId>validation-api</artifactId>
+            <version>1.1.0.Final</version>
+        </dependency>
+        <!-- Amazon AWS SDK | https://aws.amazon.com/sdk-for-java/ -->
+        <dependency>
+            <groupId>com.amazonaws</groupId>
+            <artifactId>aws-java-sdk</artifactId>
+            <version>1.9.16</version>
+        </dependency>
+    </dependencies>
+
+    <plugins>
+        <!-- Maven plugin to generate javadoc -->
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-javadoc-plugin</artifactId>
+            <version>2.9</version>
+            <executions>
+                <execution>
+                    <id>attach-javadocs</id>
+                    <goals>
+                        <goal>jar</goal>
+                    </goals>
+                </execution>
+            </executions>
+        </plugin>
+    </plugins>
+
+</project>
