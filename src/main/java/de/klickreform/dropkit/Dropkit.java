@@ -12,6 +12,7 @@ import java.util.Set;
 
 import de.klickreform.dropkit.exception.ApiExceptionMapper;
 import de.klickreform.dropkit.exception.ConstraintViolationExceptionMapper;
+import de.klickreform.dropkit.exception.JsonProcessingExceptionMapper;
 import de.klickreform.dropkit.exception.LoggingExceptionMapper;
 import io.dropwizard.setup.Environment;
 import org.eclipse.jetty.servlets.CrossOriginFilter;
@@ -45,6 +46,7 @@ public class Dropkit {
         }
         environment.jersey().register(new ApiExceptionMapper());
         environment.jersey().register(new LoggingExceptionMapper());
+        environment.jersey().register(new JsonProcessingExceptionMapper());
         environment.jersey().register(new ConstraintViolationExceptionMapper());
     }
 

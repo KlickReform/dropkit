@@ -1,7 +1,7 @@
 package de.klickreform.dropkit.mongo;
 
 import com.mongodb.MongoException;
-import de.klickreform.dropkit.dao.AbstractDao;
+import de.klickreform.dropkit.dao.Dao;
 import de.klickreform.dropkit.exception.DuplicateEntryException;
 import de.klickreform.dropkit.exception.NotFoundException;
 import io.dropwizard.util.Generics;
@@ -17,9 +17,8 @@ import java.util.Map;
  * Abstract Data Access Object (DAO) to work with Morphia Datastore.
  *
  * @author Benjamin Bestmann
- * @since 03.11.2014
  */
-public class MorphiaDao<E> implements AbstractDao<E> {
+public abstract class MorphiaDao<E extends MorphiaDomainModel, K extends String> implements Dao<E,K> {
 
     protected Datastore datastore;
     private final Class<?> entityClass;
@@ -35,9 +34,12 @@ public class MorphiaDao<E> implements AbstractDao<E> {
     }
 
     @Override
-    public E findById(String id) throws NotFoundException {
+    public E findById(K id) throws NotFoundException {
         try {
             ObjectId objectId = new ObjectId(id);
+            if((E)datastore.get(entityClass, objectId) == null) {
+                throw new NotFoundException("No entity found with id " + id);
+            }
             return (E)datastore.get(entityClass, objectId);
         } catch(IllegalArgumentException e) {
             throw new NotFoundException("No entity found with id " + id);
@@ -47,12 +49,42 @@ public class MorphiaDao<E> implements AbstractDao<E> {
     @Override
     public String create(E entity) throws DuplicateEntryException {
         try {
+            if(datastore.get(entity) != null) {
+                // If there is already an entity with this Key
+                throw new DuplicateEntryException("Can't create entity. Entity already exists.");
+            }
             Key<E> key = datastore.save(entity);
             return key.getId().toString();
         } catch(MongoException.DuplicateKey e) {
-            throw new DuplicateEntryException("An entry already exists");
+            // If any unique field with this value already exists, throw DuplicateEntryException
+            throw new DuplicateEntryException("Duplicate Field Value: " + e.getMessage());
         }
+    }
 
+    @Override
+    public String createOrUpdate(E entity) {
+        try {
+            Key<E> key = datastore.save(entity);
+            return key.getId().toString();
+        } catch(MongoException.DuplicateKey e) {
+            // If any unique field with this value already exists, throw DuplicateEntryException
+            throw new DuplicateEntryException("Duplicate Field Value: " + e.getMessage());
+        }
+    }
+
+    @Override
+    public String update(E entity) throws NotFoundException, DuplicateEntryException {
+        try {
+            if(datastore.get(entity) == null) {
+                // If there is no entity with this Key
+                throw new NotFoundException("Could not update. Entity already exists.");
+            }
+            Key<E> key = datastore.save(entity);
+            return key.getId().toString();
+        } catch(MongoException.DuplicateKey e) {
+            // If any unique field with this value already exists, throw DuplicateEntryException
+            throw new DuplicateEntryException("Duplicate Field Value: " + e.getMessage());
+        }
     }
 
     @Override
@@ -60,13 +92,6 @@ public class MorphiaDao<E> implements AbstractDao<E> {
         datastore.delete(entity);
     }
 
-    /**
-     * Utility method that will create a set of update statements from a Map<String,Object>
-     *
-     * @param ops The morphia UpdateOperations Object that the statements will be added to
-     * @param updateData The Map<String,Object> that contains the fields to be updated
-     * @return The UpdateOperations Object containing all update statements created from the Map
-     */
     public UpdateOperations<E> prepareUpdateStatement(UpdateOperations<E> ops, Map<String,Object> updateData) {
         // Iterate over the map of values that should be added to the UpdateOperations
         for(Map.Entry<String,Object> entry : updateData.entrySet()) {
