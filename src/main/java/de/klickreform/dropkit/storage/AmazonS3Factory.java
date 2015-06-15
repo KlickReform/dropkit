@@ -8,7 +8,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.validator.constraints.NotEmpty;
 
 /**
- * Factory to create instances of MongoClient from the Dropwizard Configuration.
+ * Factory to create instances of AmazonS3Factory from the Dropwizard Configuration.
  *
  * @author Benjamin Bestmann
  */

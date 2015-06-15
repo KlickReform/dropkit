@@ -8,7 +8,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>de.klickreform</groupId>
     <artifactId>dropkit</artifactId>
-    <version>0.1.1</version>
+    <version>0.1.2</version>
     <packaging>jar</packaging>
 
     <name>dropkit</name>
@@ -59,6 +59,18 @@
             <groupId>io.dropwizard</groupId>
             <artifactId>dropwizard-hibernate</artifactId>
             <version>${dropwizard.version}</version>
+        </dependency>
+        <!-- Jersey Client | https://jersey.java.net/documentation/latest/client.html -->
+        <dependency>
+            <groupId>com.sun.jersey</groupId>
+            <artifactId>jersey-client</artifactId>
+            <version>1.18.1</version>
+        </dependency>
+        <!-- Jersey Multipart | http://mvnrepository.com/artifact/com.sun.jersey.contribs/jersey-multipart -->
+        <dependency>
+            <groupId>com.sun.jersey.contribs</groupId>
+            <artifactId>jersey-multipart</artifactId>
+            <version>1.18.1</version>
         </dependency>
         <!-- Apache Commons Codec for common encoders and decoders | http://commons.apache.org/proper/commons-codec/  -->
         <dependency>

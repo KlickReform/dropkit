@@ -1,7 +1,9 @@
 package de.klickreform.dropkit.exception;
 
 /**
- * Created by benjamin on 30.04.15.
+ * Exception to be thrown if a user tries to enter invalid data.
+ *
+ * @author Benjamin Bestmann
  */
 public class InvalidDataException extends ApiException {
 
