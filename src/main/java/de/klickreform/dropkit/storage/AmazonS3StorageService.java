@@ -23,7 +23,6 @@ public class AmazonS3StorageService implements StorageService {
         this.tempDirectory = tempDirectory;
     }
 
-    @Override
     public String store(InputStream uploadedInputStream, String path, String fileName) throws IOException {
         File file = new File(tempDirectory + UUID.randomUUID().toString());
         // Save InputStream to file in the specified temp directory

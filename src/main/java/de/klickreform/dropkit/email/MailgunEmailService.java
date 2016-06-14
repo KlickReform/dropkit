@@ -10,32 +10,40 @@ import de.klickreform.dropkit.exception.EmailException;
 import javax.ws.rs.core.MediaType;
 
 /**
- * Created by benjamin on 15.06.15.
+ * EmailService Implementation based on Mailgun.
+ *
+ * @author Benjamin Bestmann
  */
 public class MailgunEmailService implements EmailService {
 
     private String key;
     private String domain;
+    private String from;
     private static final String BASE_URL = "https://api.mailgun.net/v3";
     private static final String USERNAME = "api";
 
 
-    public MailgunEmailService(String key, String domain) {
+    public MailgunEmailService(String key, String domain, String from) {
         this.key = key;
         this.domain = domain;
+        this.from = from;
     }
 
-    public void send(Email email) {
+    public void send(Email email, boolean html) {
         // Create client and setup authentication
         Client client = Client.create();
         client.addFilter(new HTTPBasicAuthFilter(USERNAME,key));
         // Build Request Data from Email
         WebResource webResource = client.resource(BASE_URL + "/" + domain + "/messages");
         MultivaluedMapImpl mailData = new MultivaluedMapImpl();
-        mailData.add("from",email.getFrom());
+        mailData.add("from", this.from);
+        if(email.getFrom() != null) {
+            // If there has been a From Address specified, overwrite default
+            mailData.add("from", email.getFrom());
+        }
         mailData.add("to", email.getTo().get(0));
         mailData.add("subject", email.getSubject());
-        if(containsHtml(email.getContents())) {
+        if(html) {
             mailData.add("html", email.getContents());
         } else {
             mailData.add("text", email.getContents());
@@ -45,10 +53,6 @@ public class MailgunEmailService implements EmailService {
         if (response.getStatus() != 200) {
             throw new EmailException("Could not send Email. Status: " + response.getStatus());
         }
-    }
-
-    private boolean containsHtml(String contents) {
-        return contents.matches(".*\\<[^>]+>.*");
     }
 
 }

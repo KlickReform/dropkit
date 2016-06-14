@@ -11,6 +11,7 @@ public class AdvancedConfiguration {
 
     private boolean signupRestriction;
     private String signupIp;
+    private String secret;
 
     @JsonProperty
     public boolean isSignupRestriction() {
@@ -28,5 +29,14 @@ public class AdvancedConfiguration {
 
     public void setSignupIp(String signupIp) {
         this.signupIp = signupIp;
+    }
+
+    @JsonProperty
+    public String getSecret() {
+        return secret;
+    }
+
+    public void setSecret(String secret) {
+        this.secret = secret;
     }
 }

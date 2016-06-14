@@ -12,6 +12,7 @@ public class MailgunFactory {
 
     private String key;
     private String domain;
+    private String from;
 
 
     @NotEmpty
@@ -34,8 +35,18 @@ public class MailgunFactory {
         this.domain = domain;
     }
 
+    @NotEmpty
+    @JsonProperty
+    public String getFrom() {
+        return from;
+    }
+
+    public void setFrom(String from) {
+        this.from = from;
+    }
+
     public MailgunEmailService buildClient() {
-        MailgunEmailService emailService = new MailgunEmailService(key,domain);
+        MailgunEmailService emailService = new MailgunEmailService(key,domain,from);
         return emailService;
     }
 

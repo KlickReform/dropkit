@@ -4,7 +4,9 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * Created by benjamin on 14.06.15.
+ * POJO to represent Emails.
+ *
+ * @author Benjamin Bestmann
  */
 public class Email {
 
@@ -16,6 +18,11 @@ public class Email {
     private String contents;
 
     public Email() { }
+
+    public Email(String to, String contents) {
+        this.to = Arrays.asList(to.split(","));
+        this.contents = contents;
+    }
 
     public Email(String from, String to, String contents) {
         this.from = from;

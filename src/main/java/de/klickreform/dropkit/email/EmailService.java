@@ -5,6 +5,6 @@ package de.klickreform.dropkit.email;
  */
 public interface EmailService {
 
-    public void send(Email email);
+    public void send(Email email, boolean html);
 
 }

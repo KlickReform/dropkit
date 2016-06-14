@@ -28,12 +28,10 @@ public abstract class MorphiaDao<E extends MorphiaDomainModel, K extends String>
         this.entityClass = Generics.getTypeParameter(getClass());
     }
 
-    @Override
     public List<E> findAll() {
         return (List<E>)datastore.find(entityClass).asList();
     }
 
-    @Override
     public E findById(K id) throws NotFoundException {
         try {
             ObjectId objectId = new ObjectId(id);
@@ -46,7 +44,6 @@ public abstract class MorphiaDao<E extends MorphiaDomainModel, K extends String>
         }
     }
 
-    @Override
     public String create(E entity) throws DuplicateEntryException {
         try {
             if(datastore.get(entity) != null) {
@@ -61,7 +58,6 @@ public abstract class MorphiaDao<E extends MorphiaDomainModel, K extends String>
         }
     }
 
-    @Override
     public String createOrUpdate(E entity) {
         try {
             Key<E> key = datastore.save(entity);
@@ -72,7 +68,6 @@ public abstract class MorphiaDao<E extends MorphiaDomainModel, K extends String>
         }
     }
 
-    @Override
     public String update(E entity) throws NotFoundException, DuplicateEntryException {
         try {
             if(datastore.get(entity) == null) {
@@ -87,7 +82,6 @@ public abstract class MorphiaDao<E extends MorphiaDomainModel, K extends String>
         }
     }
 
-    @Override
     public void delete(E entity) {
         datastore.delete(entity);
     }

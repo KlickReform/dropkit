@@ -78,11 +78,9 @@ public class MongoFactory {
         final MongoClient client = new MongoClient(getHost(), getPort());
         // Bind MongoClient to application lifecycle using a Managed Object
         environment.lifecycle().manage(new Managed() {
-            @Override
             public void start() throws Exception {
                 // nothing here
             }
-            @Override
             public void stop() throws Exception {
                 // Close Mongo Session when application stops
                 client.close();
